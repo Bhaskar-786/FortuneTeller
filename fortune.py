@@ -1,4 +1,5 @@
 import random
+from datetime import datetime
 
 fortunes = {
     "happy": [
@@ -27,15 +28,23 @@ fortunes = {
     ]
 }
 
+def log_to_file(mood, fortune):
+    with open("fortune_log.txt", "a") as log_file:
+        log_file.write(f"[{datetime.now()}] Mood: {mood}, Fortune: {fortune}\n")
+
 def main():
     print("🔮 Welcome to Bhaskar's Fortune Teller (21je0236) 🔮")
     mood = input("How are you feeling today? (happy/sad/neutral/stressed/excited/anxious): ").strip().lower()
-    
+
     if mood in fortunes:
         message = random.choice(fortunes[mood])
-        print(f"✨ Your fortune: {message} ✨")
     else:
-        print("✨ Your fortune: Sometimes the unexpected brings new opportunities. Embrace it, Bhaskar. ✨")
+        message = "Sometimes the unexpected brings new opportunities. Embrace it, Bhaskar."
+
+    print(f"✨ Your fortune: {message} ✨")
+
+     
+    log_to_file(mood, message)
 
 if __name__ == '__main__':
     main()
